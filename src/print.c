@@ -11,7 +11,7 @@
 
 int first_file_match = 1;
 
-const char *color_reset = "\e[0m\e[K";
+const char *color_reset = "\033[0m\033[K";
 
 void print_path(const char *path, const char sep) {
     log_debug("printing path");
@@ -141,14 +141,14 @@ void print_file_matches(const char *path, const char *buf, const int buf_len, co
                         fprintf(out_fd, "%s", opts.color_match);
                     }
                     for (j = prev_line_offset; j <= i; j++) {
-                        if (j == matches[last_printed_match].end && last_printed_match < matches_len) {
+                        if (last_printed_match < matches_len && j == matches[last_printed_match].end) {
                             if (opts.color) {
                                 fprintf(out_fd, "%s", color_reset);
                             }
                             printing_a_match = FALSE;
                             last_printed_match++;
                         }
-                        if (j == matches[last_printed_match].start && last_printed_match < matches_len) {
+                        if (last_printed_match < matches_len && j == matches[last_printed_match].start) {
                             if (opts.color) {
                                 fprintf(out_fd, "%s", opts.color_match);
                             }
