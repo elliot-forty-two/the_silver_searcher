@@ -24,3 +24,8 @@ src/config.h*
 stamp-h1
 tests/*.err
 the_silver_searcher.spec
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
+install_manifest.txt
+libag.a
