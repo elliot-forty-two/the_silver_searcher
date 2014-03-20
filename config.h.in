@@ -15,6 +15,9 @@
 #cmakedefine HAVE_STRNDUP
 #cmakedefine HAVE_REALPATH
 
+/* Libraries */
+#cmakedefine HAVE_LZMA_H
+
 /* Struct members */
 #cmakedefine HAVE_DIRENT_DTYPE
 
