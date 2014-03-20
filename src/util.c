@@ -8,12 +8,6 @@
 #include "util.h"
 #include "config.h"
 
-#ifdef _WIN32
-#define flockfile(x)
-#define funlockfile(x)
-#define getc_unlocked(x) getc(x)
-#endif
-
 #define CHECK_AND_RETURN(ptr)             \
     if (ptr == NULL) {                    \
         die("Memory allocation failed."); \
@@ -376,29 +370,19 @@ void die(const char *fmt, ...) {
 #ifndef HAVE_FGETLN
 char *fgetln(FILE *fp, size_t *lenp) {
     char *buf = NULL;
-    int c, used = 0, len = 0;
+    int c;
+    size_t used = 0, len = 0;
 
-    flockfile(fp);
-    while ((c = getc_unlocked(fp)) != EOF) {
-        if (!buf || len > used) {
-            size_t nsize;
-            char *newbuf;
-            nsize = used + BUFSIZ;
-            if (!(newbuf = realloc(buf, nsize))) {
-                funlockfile(fp);
-                if (buf)
-                    free(buf);
-                return NULL;
-            }
-            buf = newbuf;
-            used = nsize;
+    while ((c = fgetc(fp)) != EOF) {
+        if (!buf || len >= used) {
+            used += BUFSIZ;
+            buf = ag_realloc(buf, used);
         }
         buf[len++] = c;
         if (c == '\n') {
             break;
         }
     }
-    funlockfile(fp);
     *lenp = len;
     return buf;
 }

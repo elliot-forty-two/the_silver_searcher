@@ -62,7 +62,7 @@ void vplog(const unsigned int level, const char *fmt, va_list args) {
     }
 
     vfprintf(stream, fmt, args);
-    fprintf(stream, "\n");
+    fputc('\n', stream);
 }
 
 void plog(const unsigned int level, const char *fmt, ...) {
