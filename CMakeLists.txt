@@ -4,7 +4,7 @@ include (CheckFunctionExists)
 include (CheckStructHasMember)
 
 project (the_silver_searcher)
-set (PROJECT_VERSION "0.21.0")
+set (PROJECT_VERSION "0.21.1")
 
 set (PACKAGE "${PROJECT_NAME}")
 set (VERSION "${PROJECT_VERSION}")
